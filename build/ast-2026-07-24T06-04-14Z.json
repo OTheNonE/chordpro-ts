@@ -1,0 +1,534 @@
+{
+  "type": "song",
+  "metadata": [
+    {
+      "type": "metadata",
+      "name": "title",
+      "value": "Góðska Guds"
+    },
+    {
+      "type": "metadata",
+      "name": "subtitle",
+      "value": "Goodness of God"
+    },
+    {
+      "type": "metadata",
+      "name": "key",
+      "value": "A"
+    }
+  ],
+  "children": [
+    {
+      "type": "comment",
+      "name": "normal",
+      "value": "Intro: Kassagittar, so klaver+bass í vers"
+    },
+    {
+      "type": "environment",
+      "name": "verse",
+      "action": "start",
+      "label": "Verse 1.",
+      "children": [
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "1. Eg elski "
+            },
+            {
+              "type": "segment",
+              "text": "teg, tí tín ",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "náði ei meg ",
+              "chord": {
+                "type": "chord",
+                "root": "D",
+                "bass": {
+                  "root": "A"
+                }
+              }
+            },
+            {
+              "type": "segment",
+              "text": "svíkur.",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Hvønn ein "
+            },
+            {
+              "type": "segment",
+              "text": "dag hond tín ",
+              "chord": {
+                "type": "chord",
+                "root": "F",
+                "accidental": "#",
+                "quality": "m"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "sterka meg ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "ber. ",
+              "chord": {
+                "type": "chord",
+                "root": "E",
+                "quality": "sus4"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Tá eg opni míni "
+            },
+            {
+              "type": "segment",
+              "text": "eygu, ",
+              "chord": {
+                "type": "chord",
+                "root": "F",
+                "accidental": "#",
+                "quality": "m"
+              }
+            },
+            {
+              "type": "segment",
+              "text": " og til eg ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "leggi me-",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "g,",
+              "chord": {
+                "type": "chord",
+                "root": "F",
+                "accidental": "#",
+                "quality": "m"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "vil eg "
+            },
+            {
+              "type": "segment",
+              "text": "syngja um ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "góðsku Tína, ",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "Gud.",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "line",
+      "children": [
+        {
+          "type": "segment",
+          "text": "Chorus - øll koma inn her!"
+        }
+      ]
+    },
+    {
+      "type": "environment",
+      "name": "chorus",
+      "action": "start",
+      "children": [
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Alt mítt lív Tú ert so ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "trúgvur.",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Alt mítt lív Tú góður ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "ert við ",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "meg.",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Hvønn andadrátt á hvørjum ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "degi",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "",
+              "chord": {
+                "type": "chord",
+                "root": "F",
+                "accidental": "#",
+                "quality": "m"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "vil eg "
+            },
+            {
+              "type": "segment",
+              "text": "syngja um ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "góðsku Tína, ",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "Gud",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "environment",
+      "name": "verse",
+      "action": "start",
+      "label": "Verse 2.",
+      "children": [
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "2. Tín rødd so mild leiddi meg ígjøgnum trongdir"
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Og í myrku nátt vart Tú nær sum eingin annar"
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Eg kenni Teg sum pápa, eg kenni Teg sum vin,"
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "og lív mítt gyrt er av góðsku Tíni, Gud."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "line",
+      "children": [
+        {
+          "type": "segment",
+          "text": "chorus"
+        }
+      ]
+    },
+    {
+      "type": "line",
+      "children": [
+        {
+          "type": "segment",
+          "text": "Alt mítt lív tú ert so trúgvur....."
+        }
+      ]
+    },
+    {
+      "type": "environment",
+      "name": "bridge",
+      "action": "start",
+      "children": [
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Tín góðska ",
+              "chord": {
+                "type": "chord",
+                "root": "A",
+                "bass": {
+                  "root": "C",
+                  "accidental": "#"
+                }
+              }
+            },
+            {
+              "type": "segment",
+              "text": "fylgir mær. Hon ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "floymir yvir ",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "meg x2",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Alt mítt "
+            },
+            {
+              "type": "segment",
+              "text": "lív er Títt, eg Tær ",
+              "chord": {
+                "type": "chord",
+                "root": "A",
+                "bass": {
+                  "root": "C",
+                  "accidental": "#"
+                }
+              }
+            },
+            {
+              "type": "segment",
+              "text": "gevi alt.",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Eg "
+            },
+            {
+              "type": "segment",
+              "text": "yvirgevi ",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "meg.",
+              "chord": {
+                "type": "chord",
+                "root": "F",
+                "accidental": "#",
+                "quality": "m"
+              }
+            }
+          ]
+        },
+        {
+          "type": "line",
+          "children": [
+            {
+              "type": "segment",
+              "text": "Tín "
+            },
+            {
+              "type": "segment",
+              "text": "góðska ",
+              "chord": {
+                "type": "chord",
+                "root": "A",
+                "bass": {
+                  "root": "C",
+                  "accidental": "#"
+                }
+              }
+            },
+            {
+              "type": "segment",
+              "text": "fylgir mær, hon ",
+              "chord": {
+                "type": "chord",
+                "root": "D"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "floymir yvir ",
+              "chord": {
+                "type": "chord",
+                "root": "E"
+              }
+            },
+            {
+              "type": "segment",
+              "text": "meg.",
+              "chord": {
+                "type": "chord",
+                "root": "A"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+.song {
+    font-family: sans-serif;
+}
+
+.line {
+    white-space: nowrap;
+    min-height: 2.2em;
+}
+
+.segment {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    padding-top: 1.2em; /* Reserve space for chords on every segment */
+}
+
+.chord {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: bold;
+    color: #0050b3;
+    white-space: nowrap;
+}
+
+.lyrics {
+    white-space: pre;
+}
+
+/* Empty lines between sections */
+.empty-line {
+    height: 1em;
+}
+
+/* Add spacing between verses/choruses/environments */
+.environment {
+    margin-bottom: 1.5em;
+}
+
+.environment + .environment {
+    margin-top: 1.5em;
+}
+
+.environment-label {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
