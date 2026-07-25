@@ -3,6 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@lezer/common": "^1.5.2",
     "@lezer/generator": "^1.8.0",
     "@types/bun": "latest"
   },

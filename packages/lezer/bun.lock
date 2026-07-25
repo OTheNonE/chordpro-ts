@@ -8,6 +8,7 @@
         "@lezer/lr": "^1.4.10",
       },
       "devDependencies": {
+        "@lezer/common": "^1.5.2",
         "@lezer/generator": "^1.8.0",
         "@types/bun": "latest",
       },
