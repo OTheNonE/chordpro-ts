@@ -1,3 +1,4 @@
+import type { Tree } from "@lezer/common";
 import { buildParser } from "@lezer/generator"
 
 const grammarSpec = await Bun
@@ -18,7 +19,7 @@ const chordproSample = `
 
 const tree = parser.parse(chordproSample);
 
-function printNodes(tree, sourceCode) {
+function printNodes(tree: Tree, sourceCode: string) {
   const cursor = tree.cursor();
 
   do {
