@@ -6,18 +6,16 @@ const grammarSpec = await Bun
     .text()
 const parser = buildParser(grammarSpec)
 
-const chordproSample = `
-{title: Amazing Grace}
-{artist: John Newton}
+const chordproSample = `{start_of_verse: Verse 1}{ artist:   John Newton    }{end_of_verse}`;
 
-{soc Chorus}
-[G]Amazing [G7]grace! How [C]sweet the [G]sound
-{eoc}
+// [G]Amazing [G7]grace! How [C]sweet the [G]sound
+// {eoc}
 
-{c: Repeat twice}
-`;
+// {c: Repeat twice}
 
 const tree = parser.parse(chordproSample);
+
+console.log(tree.toString())
 
 function printNodes(tree: Tree, sourceCode: string) {
   const cursor = tree.cursor();

@@ -1,0 +1,108 @@
+@skip { space }
+
+@top Song {
+    element*
+}
+
+element {
+    Metadata |
+    Comment |
+    Line |
+    EmptyLine |
+    Environment
+}
+
+/* --- Metadata --- */
+
+Metadata {
+    "{" DirectiveIdentifier "}"
+}
+
+/* --- Directives & Comments --- */
+
+DirectiveBody {
+    directiveName (":" directiveValue)?
+}
+
+directiveName {
+    @specialize<Identifier, 
+        "title" | "t" | "subtitle" | "st" | "artist" | 
+        "key" | "tempo" | "time" | "comment" | "c" | 
+        "comment_italic" | "ci" | "comment_box" | "cb"
+    >
+}
+
+directiveValue {
+    DirectiveValueText
+}
+
+/* --- Block Environments --- */
+
+Environment {
+    startEnv
+    element*
+    endEnv
+}
+
+startEnv {
+    "{" startEnvName directiveValue? "}"
+}
+
+startEnvName {
+    @specialize<Identifier, "start_of_chorus" | "soc" | "start_of_verse" | "sov" | "start_of_tab" | "sot">
+}
+
+endEnv {
+    "{" endEnvName "}"
+}
+
+endEnvName {
+    @specialize<Identifier, "end_of_chorus" | "eoc" | "end_of_verse" | "eov" | "end_of_tab" | "eot">
+}
+
+/* --- Chords --- */
+
+Chord {
+    "[" ChordContent "]"
+}
+
+/* --- Tokens --- */
+
+@tokens {
+
+    
+
+
+    EnvironmentStart {
+        "{"
+        EnvironmentIdentifier
+        "}"
+    }
+
+    EnvironmentEnd {
+        "{"
+        EnvironmentIdentifier
+        "}"
+    }
+
+
+    Identifier { $[a-zA-Z_]+ }
+    
+    DirectiveValueText { ![\}\n\r]+ }
+    
+    ChordContent { ![\]\n\r]+ }
+    
+    // Explicitly prevent regular Text from eating closing braces/brackets
+    Text { ![\{\[\}\]\n\r]+ }
+    
+    space { $[ \t\n\r]+ }
+
+    @precedence { space, Identifier }
+    @precedence { space, DirectiveValueText }
+    @precedence { space, ChordContent }
+    @precedence { space, Text }
+    @precedence { DirectiveValueText, Text }
+    @precedence { ChordContent, Text }
+}
+
+@detectDelim

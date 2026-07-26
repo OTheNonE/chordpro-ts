@@ -1,84 +1,65 @@
-@skip { space }
-
 @top Song {
-  element*
+    element*
 }
 
 element {
-  Chord |
-  Directive |
-  Environment |
-  Text
+    Line |
+    Environment
+    // Comment |
+    // Line |
+    // EmptyLine |
 }
 
-/* --- Directives & Comments --- */
-
-Directive {
-  "{" directiveName (":" directiveValue)? "}"
+Line {
+    // Text |
+    // Chord |
+    Metadata
+    // Comment
 }
 
-directiveName {
-  @specialize<Identifier, 
-    "title" | "t" | "subtitle" | "st" | "artist" | 
-    "key" | "tempo" | "time" | "comment" | "c" | 
-    "comment_italic" | "ci" | "comment_box" | "cb"
-  >
+/* --- Metadata --- */
+
+Metadata {
+    "{" MetadataKey directiveSeparator MetadataValue "}"
 }
 
-directiveValue {
-  DirectiveValueText
-}
-
-/* --- Block Environments --- */
-
+/* --- Environment --- */
 Environment {
-  startEnv
-  element*
-  endEnv
+    "{" EnvironmentStartKey (directiveSeparator EnvironmentLabel)? "}"
+    Line*
+    "{" EnvironmentEndKey "}"
 }
 
-startEnv {
-  "{" startEnvName directiveValue? "}"
+EnvironmentLabel {
+    text | "label=" string
 }
-
-startEnvName {
-  @specialize<Identifier, "start_of_chorus" | "soc" | "start_of_verse" | "sov" | "start_of_tab" | "sot">
-}
-
-endEnv {
-  "{" endEnvName "}"
-}
-
-endEnvName {
-  @specialize<Identifier, "end_of_chorus" | "eoc" | "end_of_verse" | "eov" | "end_of_tab" | "eot">
-}
-
-/* --- Chords --- */
-
-Chord {
-  "[" ChordContent "]"
-}
-
-/* --- Tokens --- */
 
 @tokens {
-  Identifier { $[a-zA-Z_]+ }
-  
-  DirectiveValueText { ![\}\n\r]+ }
-  
-  ChordContent { ![\]\n\r]+ }
-  
-  // Explicitly prevent regular Text from eating closing braces/brackets
-  Text { ![\{\[\}\]\n\r]+ }
-  
-  space { $[ \t\n\r]+ }
+    space { $[ \t]+ }
+    identifier { $[a-zA-Z_]+ }
+    string { '"' (![\\"] | "\\" _)* '"' }
+    text { ![}\n\r]+ }
 
-  @precedence { space, Identifier }
-  @precedence { space, DirectiveValueText }
-  @precedence { space, ChordContent }
-  @precedence { space, Text }
-  @precedence { DirectiveValueText, Text }
-  @precedence { ChordContent, Text }
+    directiveSeparator {
+        (space* ":" space* | space)
+    }
+
+    MetadataValue { text }
+    MetadataKey { identifier }
+
+    EnvironmentStartKey { "start_of_" identifier }
+    EnvironmentEndKey { "end_of_" identifier }
+
+
+    @precedence {
+        space,
+        ":",
+        text,
+        "label=" string
+        MetadataKey,
+        MetadataValue,
+        EnvironmentStartKey,
+        EnvironmentLabel,
+        EnvironmentEndKey
+    }
 }
-
-@detectDelim
