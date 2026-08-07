@@ -15,10 +15,6 @@
     "verbatimModuleSyntax": true,
     "noEmit": true,
 
-    "paths": {
-      "$src/*": ["./src/*"]
-    },
-
     // Best practices
     "strict": true,
     "skipLibCheck": true,

@@ -1,7 +1,10 @@
 {
-  "name": "chordpro-lezer",
-  "module": "index.ts",
+  "name": "@chordpro-ts/lezer",
+  "module": "./src/index.ts",
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "devDependencies": {
     "@lezer/common": "^1.5.2",
     "@lezer/generator": "^1.8.0",

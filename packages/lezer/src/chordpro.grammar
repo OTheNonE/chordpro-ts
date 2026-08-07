@@ -1,65 +1,173 @@
-@top Song {
-    element*
+@top Document {
+    document
 }
 
-element {
-    Line |
-    Environment
-    // Comment |
-    // Line |
-    // EmptyLine |
+document {
+    line* finalLine?
 }
 
-Line {
-    // Text |
-    // Chord |
-    Metadata
-    // Comment
+line {
+    (TextLine | Environment | Metadata) lineEnd | BlankLine
 }
 
-/* --- Metadata --- */
-
-Metadata {
-    "{" MetadataKey directiveSeparator MetadataValue "}"
+environmentLine {
+    TextLine lineEnd | BlankLine
 }
 
-/* --- Environment --- */
+BlankLine {
+    lineEnd
+}
+
+finalLine {
+    TextLine
+}
+
+TextLine {
+    (Text | Chord)+
+}
+
 Environment {
-    "{" EnvironmentStartKey (directiveSeparator EnvironmentLabel)? "}"
-    Line*
-    "{" EnvironmentEndKey "}"
+    EnvironmentStart (environmentLine* finalLine?) EnvironmentEnd
+}
+
+EnvironmentStart {
+    "{" 
+        EnvironmentStartKeyword 
+        directiveSeparator
+        environmentInfo?
+    "}"
+}
+
+EnvironmentEnd {
+    "{" EnvironmentEndKeyword "}"
+}
+
+environmentInfo {
+    EnvironmentLabel | DirectiveAttributes
 }
 
 EnvironmentLabel {
-    text | "label=" string
+    environmentLabelText
+}
+
+@external tokens environmentLabelTokenizer from "./tokens" {
+    environmentLabelText
+}
+
+DirectiveAttributes {
+    DirectiveAttribute (space DirectiveAttribute)*
+}
+
+DirectiveAttribute {
+    DirectiveAttributeName "=" DirectiveAttributeValue
+}
+
+DirectiveAttributeName { 
+    identifier
+}
+
+DirectiveAttributeValue { string }
+
+EnvironmentStartKeyword {
+    kw<"start_of_chorus"> |
+    kw<"start_of_verse"> |
+    kw<"start_of_bridge"> |
+    kw<"soc"> |
+    kw<"sov"> |
+    kw<"sob">
+//   kw<"sot"> |
+//   kw<"sog">
+}
+
+EnvironmentEndKeyword {
+    kw<"end_of_chorus"> |
+    kw<"end_of_verse"> |
+    kw<"end_of_bridge"> |
+    kw<"eoc"> |
+    kw<"eov"> |
+    kw<"eob">
+//   kw<"sot"> |
+//   kw<"sog">
+}
+
+Chord {
+    "[" ChordContent "]"
+}
+
+Metadata {
+    "{" 
+        MetadataName 
+        directiveSeparator
+        MetadataValue
+    "}"
+}
+
+MetadataName {
+    kw<"title"> |
+    kw<"t"> |
+
+    kw<"sorttitle"> |
+
+    kw<"subtitle"> |
+    kw<"st"> |
+
+    kw<"artist"> |
+    kw<"sortartist"> |
+    kw<"composer"> |
+    kw<"lyricist"> |
+    kw<"copyright"> |
+    kw<"album"> |
+    kw<"year"> |
+
+    kw<"key"> |
+    kw<"time"> |
+    kw<"tempo"> |
+    kw<"duration"> |
+    kw<"capo"> |
+    kw<"tag"> |
+    kw<"meta">
+}
+
+MetadataValue {
+    environmentLabelText
+}
+
+
+directiveSeparator { (space* ":" space* | space) }
+
+
+
+kw<keyword> {
+    @specialize[@name={keyword}]<identifier, keyword>
 }
 
 @tokens {
+    Text { ![{}\[\]\r\n]+ }
+
+    ChordContent { ![\]\n\r]+ }
+
     space { $[ \t]+ }
-    identifier { $[a-zA-Z_]+ }
-    string { '"' (![\\"] | "\\" _)* '"' }
-    text { ![}\n\r]+ }
 
-    directiveSeparator {
-        (space* ":" space* | space)
+    // directiveUnnamedLabel { 
+    //     ![{}\[\]\r\n\t="':]
+    //     ![ {}\[\]\r\n\t="':]*
+    // }
+
+    identifier {
+        (@asciiLetter | "_")
+        (@asciiLetter | @digit | "_")*
     }
+    
+    // labelNumber {
+    //     @digit+
+    // }
 
-    MetadataValue { text }
-    MetadataKey { identifier }
+    string { "\"" (!["\\] | "\\" _)* "\"" }
 
-    EnvironmentStartKey { "start_of_" identifier }
-    EnvironmentEndKey { "end_of_" identifier }
+    lineEnd { "\r\n" | "\n" | "\r" }
 
-
-    @precedence {
-        space,
-        ":",
-        text,
-        "label=" string
-        MetadataKey,
-        MetadataValue,
-        EnvironmentStartKey,
-        EnvironmentLabel,
-        EnvironmentEndKey
-    }
+    // @precedence {
+    //     directiveUnnamedLabel,
+    //     identifier
+    // }
 }
