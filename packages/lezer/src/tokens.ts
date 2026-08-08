@@ -1,5 +1,5 @@
 import { ExternalTokenizer } from "@lezer/lr"
-import { environmentLabelText } from "./parser.terms"
+import { directiveValueText } from "./parser.terms"
 
 const CHAR = {
   TAB: 9,
@@ -130,8 +130,7 @@ function isAttributeList(text: string): boolean {
     // BUG: For some reason, the text starts with a space, eventhough
     // the grammar is removing the space before the first attribute.
     // Anyways, it's good to keep this for safe measures.
-    skipSpace() 
-
+    skipSpace()
 
     // The grammar requires at least one attribute.
     if (!parseAttribute()) {
@@ -152,7 +151,7 @@ function isAttributeList(text: string): boolean {
     return true
 }
 
-export const environmentLabelTokenizer = new ExternalTokenizer(input => {
+export const directiveValueTokenizer = new ExternalTokenizer(input => {
     let text = ""
         
 
@@ -187,7 +186,7 @@ export const environmentLabelTokenizer = new ExternalTokenizer(input => {
         return
     }
 
-    input.acceptToken(environmentLabelText)
+    input.acceptToken(directiveValueText)
 })
 
 type ExternalTokenizerReturner = (name: string, terms: {
@@ -195,8 +194,8 @@ type ExternalTokenizerReturner = (name: string, terms: {
 }) => ExternalTokenizer
 
 export const externalTokenizer: ExternalTokenizerReturner = (name) => {
-    if (name === "environmentLabelTokenizer") {
-        return environmentLabelTokenizer
+    if (name === "directiveValueTokenizer") {
+        return directiveValueTokenizer
     }
 
     throw new Error(`Unknown external tokenizer: ${name}`)

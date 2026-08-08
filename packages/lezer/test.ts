@@ -8,13 +8,13 @@ const grammarSpec = await Bun
 
 const parser = buildParser(grammarSpec, { externalTokenizer })
 
-const chordproSample = `{title:Góðska Guds }
+const chordproSample = `{title: value="Góðska Guds" }
 {subtitle:Goodness of God }
 {key: A}
 
 {artist: Intro: Kassagittar, so klaver+bass í vers}
 
-{sov Verse 1.}
+{sov label="Verse 1."}
 1. Eg elski [A]teg, tí tín [D/A]náði ei meg [A]svíkur.
 Hvønn ein [F#m]dag hond tín [D]sterka meg [Esus4]ber. [E]
 Tá eg opni míni [F#m]eygu, [D] og til eg [A]leggi me-[F#m]g,
