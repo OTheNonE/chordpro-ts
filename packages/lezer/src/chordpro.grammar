@@ -2,6 +2,8 @@
     document
 }
 
+// ----- Document ----- //
+
 document {
     line* finalLine?
 }
@@ -10,8 +12,8 @@ line {
     (TextLine | Environment | Metadata) lineEnd | BlankLine
 }
 
-environmentLine {
-    TextLine lineEnd | BlankLine
+TextLine {
+    (Text | Chord)+
 }
 
 BlankLine {
@@ -22,12 +24,14 @@ finalLine {
     TextLine
 }
 
-TextLine {
-    (Text | Chord)+
-}
+// ----- Environment ----- //
 
 Environment {
     EnvironmentStart (environmentLine* finalLine?) EnvironmentEnd
+}
+
+environmentLine {
+    TextLine lineEnd | BlankLine
 }
 
 EnvironmentStart {
