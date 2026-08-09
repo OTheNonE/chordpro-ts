@@ -6,12 +6,16 @@ import { parser } from "@chordpro-ts/lezer";
 const configuredParser = parser.configure({
     props: [
         styleTags({
-            "EnvironmentStartKeyword/...": tags.keyword,
             EnvironmentStart: tags.keyword,
-            "EnvironmentEndKeyword/...": tags.keyword,
             EnvironmentEnd: tags.keyword,
 
-            "Metadata!": tags.keyword,
+            "Directive": tags.keyword,
+            "DirectiveName": tags.keyword,
+            "DirectiveValue": tags.keyword,
+
+            AttributeName: tags.attributeName,
+            "AttributeValue!": tags.attributeValue,
+
 
             // Chords
             Chord: tags.labelName,
@@ -85,7 +89,7 @@ export function chordproLanguageSupport(): LanguageSupport {
     return new LanguageSupport(chordproLanguage)
 }
 
-export const song = `{title:Góðska Guds }
+export const song = `{title: value="Góðska Guðs" }
 {subtitle:Goodness of God }
 {key: A}
 

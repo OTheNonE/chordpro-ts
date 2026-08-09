@@ -8,7 +8,7 @@ const grammarSpec = await Bun
 
 const parser = buildParser(grammarSpec, { externalTokenizer })
 
-const chordproSample = `{title: value="Góðska Guds" }
+const chordproSample = `{title: value="Góðska Guðs" }
 {subtitle:Goodness of God }
 {key: A}
 
@@ -19,9 +19,8 @@ const chordproSample = `{title: value="Góðska Guds" }
 Hvønn ein [F#m]dag hond tín [D]sterka meg [Esus4]ber. [E]
 Tá eg opni míni [F#m]eygu, [D] og til eg [A]leggi me-[F#m]g,
 vil eg [D]syngja um [E]góðsku Tína, [A]Gud.
-{eov}
-
-Chorus - øll koma inn her!
+{eov}`;
+const whatever = `Chorus - øll koma inn her!
 
 {soc}
 [D]Alt mítt lív Tú ert so [A]trúgvur.
@@ -45,8 +44,7 @@ Alt mítt lív tú ert so trúgvur.....
 Alt mítt [A/C#]lív er Títt, eg Tær [D]gevi alt.
 Eg [E]yvirgevi [F#m]meg.
 Tín [A/C#]góðska [D]fylgir mær, hon [E]floymir yvir [A]meg.
-{eob}`;
-
+{eob}`
 // [G]Amazing [G7]grace! How [C]sweet the [G]sound
 // {eoc}
 

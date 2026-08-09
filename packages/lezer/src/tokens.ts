@@ -143,6 +143,10 @@ function isAttributeList(text: string): boolean {
             return false
         }
 
+        if (position >= text.length) {
+            break
+        }
+
         if (!parseAttribute()) {
             return false
         }
