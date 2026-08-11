@@ -24,7 +24,7 @@ finalLine {
     TextLine
 }
 
-// ----- Directives ----- //
+// ----- Directives Type 1 - Standard ----- //
 
 Directive {
     "{"
@@ -48,7 +48,7 @@ DirectiveValue {
     directiveValueText
 }
 
-// ----- Directive Type 2. Environment ----- //
+// ----- Directive Type 2 - Environment ----- //
 
 Environment {
     EnvironmentStart (environmentLine* finalLine?) EnvironmentEnd
@@ -60,14 +60,22 @@ environmentLine {
 
 EnvironmentStart {
     "{" 
-        startOfEnvironment 
+        EnvironmentStartName 
         (directiveSeparator
         (DirectiveValue | Attributes))?
     "}"
 }
 
+EnvironmentStartName {
+    startOfEnvironment
+}
+
 EnvironmentEnd {
-    "{" endOfEnvironment "}"
+    "{" EnvironmentEndName "}"
+}
+
+EnvironmentEndName {
+    endOfEnvironment
 }
 
 // ----- Attributes ----- //
@@ -77,12 +85,12 @@ Attributes {
 }
 
 Attribute {
-    AttributeName "=" AttributeValue
+    AttributeName AttributeEqual AttributeValue
 }
 
-AttributeName { 
-    identifier
-}
+AttributeName { identifier }
+
+AttributeEqual { "=" }
 
 AttributeValue { string }
 

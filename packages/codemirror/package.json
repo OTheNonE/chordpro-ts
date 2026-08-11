@@ -1,5 +1,5 @@
 {
-  "name": "@chordpro-ts/lezer",
+  "name": "@chordpro-ts/codemirror",
   "type": "module",
   "exports": {
     ".": {
@@ -8,17 +8,15 @@
     }
   },
   "devDependencies": {
-    "@lezer/common": "^1.5.2",
-    "@lezer/generator": "^1.8.0",
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@lezer/lr": "^1.4.10"
-  },
-  "scripts": {
-    "prepare": "lezer-generator src/chordpro.grammar -o src/parser.js"
+		"@chordpro-ts/lezer": "workspace:*",
+		"@codemirror/language": "^6.12.4",
+		"@codemirror/view": "^6.43.8",
+		"@lezer/highlight": "^1.2.3"
   }
 }

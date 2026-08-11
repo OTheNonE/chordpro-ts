@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { chordproLanguageSupport, chordproSyntaxHighlighting, song } from "$lib";
+    import { song } from "$lib";
+    import { chordpro, chordproSyntaxHighlighting } from "@chordpro-ts/codemirror";
     import { EditorView } from "@codemirror/view"
     import { basicSetup } from "codemirror"
 
@@ -11,7 +12,7 @@
             parent: div_element,
             extensions: [
                 basicSetup,
-                chordproLanguageSupport(),
+                chordpro(),
                 chordproSyntaxHighlighting
             ]
         })
