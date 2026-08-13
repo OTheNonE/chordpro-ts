@@ -39,7 +39,7 @@ export const chordproHighlightStyle = HighlightStyle.define([
         fontWeight: "700",
     },
 
-    // # comments
+    // Comments
     {
         tag: chordproTags.comment,
         color: "#6b7280",

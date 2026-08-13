@@ -1,22 +1,18 @@
-@top Document {
-    document
-}
-
-// ----- Document ----- //
-
-document {
+@top Song {
     line* finalLine?
 }
 
+// ----- Song ----- //
+
 line {
-    (TextLine | Environment | Directive) lineEnd | BlankLine
+    (TextLine | Environment | Directive) lineEnd | EmptyLine
 }
 
 TextLine {
     (Text | Chord)+
 }
 
-BlankLine {
+EmptyLine {
     lineEnd
 }
 
@@ -55,19 +51,22 @@ Environment {
 }
 
 environmentLine {
-    TextLine lineEnd | BlankLine
+    (TextLine | Directive) lineEnd | EmptyLine
 }
 
 EnvironmentStart {
     "{" 
         EnvironmentStartName 
-        (directiveSeparator
-        (DirectiveValue | Attributes))?
+        (directiveSeparator (DirectiveValue | Attributes))?
     "}"
 }
 
 EnvironmentStartName {
-    startOfEnvironment
+    startOfEnvironment EnvironmentName
+}
+
+EnvironmentName {
+    identifier
 }
 
 EnvironmentEnd {
@@ -75,13 +74,13 @@ EnvironmentEnd {
 }
 
 EnvironmentEndName {
-    endOfEnvironment
+    endOfEnvironment EnvironmentName
 }
 
 // ----- Attributes ----- //
 
 Attributes {
-    Attribute (space Attribute)*
+    Attribute (space Attribute)* space?
 }
 
 Attribute {
@@ -121,11 +120,11 @@ string {
     }
 
     startOfEnvironment {
-        ("start_of_" | "so") identifier
+        ("start_of_" | "so")
     }
 
     endOfEnvironment {
-        ("end_of_" | "eo") identifier
+        ("end_of_" | "eo")
     }
 
     @precedence {

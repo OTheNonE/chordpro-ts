@@ -70,11 +70,24 @@
         "typescript": "^5",
       },
     },
+    "packages/parser": {
+      "name": "@chordpro-ts/parser",
+      "devDependencies": {
+        "@lezer/common": "^1.5.2",
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "@chordpro-ts/lezer": "workspace:*",
+        "typescript": "^5",
+      },
+    },
   },
   "packages": {
     "@chordpro-ts/codemirror": ["@chordpro-ts/codemirror@workspace:packages/codemirror"],
 
     "@chordpro-ts/lezer": ["@chordpro-ts/lezer@workspace:packages/lezer"],
+
+    "@chordpro-ts/parser": ["@chordpro-ts/parser@workspace:packages/parser"],
 
     "@codemirror/autocomplete": ["@codemirror/autocomplete@6.20.3", "", { "dependencies": { "@codemirror/language": "^6.0.0", "@codemirror/state": "^6.0.0", "@codemirror/view": "^6.17.0", "@lezer/common": "^1.0.0" } }, "sha512-tlosUqb+3BbxCxZdu4tKeRghPFC+QM7q4X5YhKV2eCmPG+1r2F3f4AaSz5sCrFqUtX4Jh20VFTKecl16MgiV9g=="],
 
