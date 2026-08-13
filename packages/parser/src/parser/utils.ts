@@ -19,10 +19,6 @@ export function text(node: SyntaxNode, source: string): string {
     return source.slice(node.from, node.to)
 }
 
-export function child(node: SyntaxNode, name: string): SyntaxNode | null {
-    return node.getChild(name)
-}
-
 export function childText(
     node: SyntaxNode,
     name: string,

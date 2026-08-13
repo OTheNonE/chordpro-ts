@@ -1,6 +1,6 @@
 import type { SyntaxNode, Tree } from "@lezer/common";
 import type { AstAttribute, AstComment, AstEmptyLine, AstEnvironment, AstLine, AstMetadata, AstSong } from "../ast";
-import { child, children, text } from "./utils";
+import { children, text } from "./utils";
 
 export function cstToAst(tree: Tree, source: string): AstSong {
     const root = tree.topNode
@@ -62,11 +62,17 @@ function toEnvironment(node: SyntaxNode, ctx: AstContext): AstEnvironment {
         ?.getChild("EnvironmentName")
 
     const startName = nodeStartName ? ctx.text(nodeStartName) : ""
-    
+
+    children(node)
+        .forEach(child => {
+
+        })
+
 
     return {
         type: "environment",
         name: startName,
+        attributes
 
     }
 }
@@ -89,9 +95,9 @@ function toDirective(node: SyntaxNode, ctx: AstContext): AstComment | null {
         throw new Error(`Node was not Directive, was ${node.name}`)
     }
 
-    const nodeName = child(node, "DirectiveName")
-    const nodeValue = child(node, "DirectiveValue")
-    const nodeAttributes = child(node, "Attributes")
+    const nodeName = node.getChild("DirectiveName")
+    const nodeValue = node.getChild("DirectiveValue")
+    const nodeAttributes = node.getChild("Attributes")
 
     const directiveName = nodeName ? text(nodeName, ctx.source) : ""
     const directiveValue = nodeValue ? text(nodeValue, ctx.source) : ""
@@ -143,8 +149,8 @@ function toAttribute(node: SyntaxNode, ctx: AstContext): AstAttribute {
         throw new Error(`Node was not Attribute, was ${node.name}`)
     }
 
-    const nodeName = child(node, "AttributeName")
-    const nodeValue = child(node, "AttributeValue")
+    const nodeName = node.getChild("AttributeName")
+    const nodeValue = node.getChild("AttributeValue")
 
     return {
         type: "attribute",
