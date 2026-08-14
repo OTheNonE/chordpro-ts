@@ -25,7 +25,7 @@ export const chordproHighlighting = styleTags({
 
     // Attributes
     AttributeName: chordproTags.attributeName,
-    "AttributeEqual": chordproTags.attributeEquals,
+    "Attribute": chordproTags.attributeEquals,
     "AttributeValue!": chordproTags.attributeValue,
 
     // Environment

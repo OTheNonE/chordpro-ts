@@ -19,6 +19,7 @@
     "@lezer/lr": "^1.4.10"
   },
   "scripts": {
-    "prepare": "lezer-generator src/chordpro.grammar -o src/parser.js"
+    "prepare": "lezer-generator src/chordpro.grammar -o src/parser.js",
+    "test": "bun test"
   }
 }

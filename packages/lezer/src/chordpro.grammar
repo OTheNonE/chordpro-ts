@@ -49,7 +49,9 @@ DirectiveValue {
 // ----- Directive Type 2 - Environment ----- //
 
 Environment {
-    EnvironmentStart (environmentLine* finalLine?) EnvironmentEnd
+    EnvironmentStart lineEnd 
+    environmentLine* finalLine?
+    EnvironmentEnd
 }
 
 environmentLine {
@@ -86,12 +88,10 @@ Attributes {
 }
 
 Attribute {
-    AttributeName AttributeEqual AttributeValue
+    AttributeName "=" AttributeValue
 }
 
 AttributeName { identifier }
-
-AttributeEqual { "=" }
 
 AttributeValue { string }
 
