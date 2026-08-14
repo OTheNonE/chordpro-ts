@@ -22,12 +22,12 @@ export type AstNode =
 
 export type AstSong = {
     type: "song"
-    metadata: Array<AstMetadata>
 } & WithChildren<
     | AstEnvironment
     | AstLine
     | AstEmptyLine
     | AstComment
+    | AstMetadata
 >
 
 export type AstMetadata = {
@@ -40,12 +40,14 @@ export type AstEnvironment = {
     type: "environment"
     name: string
 } & (
-    | { label: string, attributes?: never }
-    | { label?: never, attributes: Array<AstAttribute> }
+    | { value: string, attributes?: never }
+    | { value?: never, attributes: Array<AstAttribute> }
+    | { value?: never, attributes?: never }
 ) & WithChildren<
     | AstLine
     | AstEmptyLine
     | AstComment
+    | AstMetadata
 >
 
 export type AstAttribute = {

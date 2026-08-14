@@ -1,86 +1,181 @@
 import type { SyntaxNode, Tree } from "@lezer/common";
-import type { AstAttribute, AstComment, AstEmptyLine, AstEnvironment, AstLine, AstMetadata, AstSong } from "../ast";
+import type { AstAttribute, AstChord, AstComment, AstEmptyLine, AstEnvironment, AstLine, AstMetadata, AstSegment, AstSong } from "../ast";
 import { children, text } from "./utils";
+import { parseChord } from "./chord";
 
 export function cstToAst(tree: Tree, source: string): AstSong {
     const root = tree.topNode
 
-    if (root.name !== "Song") {
-        throw new Error(`Did not get Song node, got instead: "${root.name}"`)
-    }
-
-    const song: AstSong = {
-        type: "song",
-        metadata: new Array(),
-        children: new Array()
-    }
-
     const ctx = createAstContext(source)
 
-    children(root)
-        .map(child => {
-            switch (child.name) {
-                case "Environment":
-                    return toEnvironment(child, ctx)
-                case "Directive":
-                    return toDirective(child, ctx)
-                case "TextLine":
-                    return toTextLine(child, ctx)
-                case "EmptyLine":
-                    return toEmptyLine()
-                default:
-                    throw new Error(`Name was not found: ${child.name}`)
-            }
-        })
-        
-
-    return song
-
-    
+    return toSong(root, ctx)
 }
 
 function createAstContext(source: string) {
     return {
         source,
         text: (node: SyntaxNode) => source.slice(node.from, node.to),
-        metadata: new Array<AstMetadata>()
     }
 }
 
 type AstContext = ReturnType<typeof createAstContext>
 
+function toSong(node: SyntaxNode, ctx: AstContext): AstSong {
+    if (node.name !== "Song") {
+        throw new Error(`Node was not Song, was ${node.name}`)
+    }
+
+    const song: AstSong = {
+        type: "song",
+        children: new Array()
+    }
+
+    children(node).forEach(child => {
+        switch (child.name) {
+            case "Environment":
+                song.children.push(toEnvironment(child, ctx))
+                break
+            case "Directive":
+                const directive = toDirective(child, ctx)
+                if (directive) {
+                    song.children.push(directive)
+                }
+                break
+            case "TextLine":
+                return toTextLine(child, ctx)
+            case "EmptyLine":
+                return toEmptyLine()
+            default:
+                throw new Error(`Name was not found: ${child.name}`)
+        }
+    })
+
+    return song
+
+
+
+}
+
 function toEnvironment(node: SyntaxNode, ctx: AstContext): AstEnvironment {
+    if (node.name !== "Environment") {
+        throw new Error(`Node was not Environment, was ${node.name}`)
+    }
+
     const nodeStart = node.getChild("EnvironmentStart")
     const nodeEnd = node.getChild("EnvironmentEnd")
 
     const nodeStartName = nodeStart
         ?.getChild("EnvironmentStartName")
         ?.getChild("EnvironmentName")
+        ?? null
 
+    // TODO: Needs validation:
+    // - Validation to be done within this function,
+    // - or validation to be done in a seperate function?
     const nodeEndName = nodeEnd
         ?.getChild("EnvironmentEndName")
         ?.getChild("EnvironmentName")
+        ?? null
 
     const startName = nodeStartName ? ctx.text(nodeStartName) : ""
 
-    children(node)
-        .forEach(child => {
+    const nodeDirectiveValue = nodeStart
+        ?.getChild("DirectiveValue")
+        ?? null
 
-        })
+    const nodeAttributes = nodeStart
+        ?.getChild("Attribute")
+        ?? null
 
+    const directiveValueOrAttributes = (() => {
 
-    return {
+        if (nodeAttributes && nodeDirectiveValue) {
+            console.warn("Impossible situation: Both attributes and directive value exists in environment.")
+        }
+
+        if (nodeAttributes) {
+            return { attributes: toAttributes(nodeAttributes, ctx) }
+        } else if (nodeDirectiveValue) {
+            return { value: ctx.text(nodeDirectiveValue) }
+        } else return undefined
+    })()
+
+    const environment: AstEnvironment = {
         type: "environment",
         name: startName,
-        attributes
-
+        ...directiveValueOrAttributes,
+        children: []
     }
+
+    children(node).forEach(child => {
+        switch (child.name) {
+            case "Directive":
+                environment.children.push(toDirective(child, ctx))
+                break
+            case "TextLine":
+                environment.children.push(toTextLine(child, ctx))
+                break
+            case "EmptyLine":
+                environment.children.push(toEmptyLine())
+                break
+            case "EnvironmentStart":
+            case "EnvironmentEnd":
+                // Ignore...
+                break
+            default:
+                throw new Error(`Name was not found: ${child.name}`)
+        }
+    })
+
+
+    return environment
 }
 
 function toTextLine(node: SyntaxNode, ctx: AstContext): AstLine {
-    return {
+
+    const line: AstLine = {
         type: "line",
+        children: []
     }
+
+    let chord: AstChord | undefined;
+
+    children(node).forEach(child => {
+        switch (child.name) {
+            case "Text":
+                line.children.push({
+                    type: "segment",
+                    text: toText(child, ctx),
+                    chord,
+                })
+                chord = undefined
+                break
+            case "Chord":
+
+                if (chord) {
+                    line.children.push({
+                        type: "segment",
+                        text: "",
+                        chord
+                    })
+                }
+
+                chord = toChord(child, ctx)
+                break
+            default:
+                throw new Error(`Name was not found: ${child.name}`)
+        }
+    })
+
+    if (chord) {
+        line.children.push({
+            type: "segment",
+            text: "",
+            chord
+        })
+    }
+
+    return line
 }
 
 function toEmptyLine(): AstEmptyLine {
@@ -90,7 +185,7 @@ function toEmptyLine(): AstEmptyLine {
 }
 
 
-function toDirective(node: SyntaxNode, ctx: AstContext): AstComment | null {
+function toDirective(node: SyntaxNode, ctx: AstContext): AstComment | AstMetadata {
     if (node.name !== "Directive") {
         throw new Error(`Node was not Directive, was ${node.name}`)
     }
@@ -125,14 +220,35 @@ function toDirective(node: SyntaxNode, ctx: AstContext): AstComment | null {
                 value: directiveValue
             }
         default:
-            ctx.metadata.push({
+            return {
                 type: "metadata",
                 name: directiveName,
                 value: nodeValue ? text(nodeValue, ctx.source) : ""
-            })
-            return null
+            }
     }
 
+}
+
+function toChord(node: SyntaxNode, ctx: AstContext): AstChord {
+    if (node.name !== "Chord") {
+        throw new Error(`Node was not Chord, was ${node.name}`)
+    }
+
+    const nodeChordContent = node.getChild("ChordContent")
+
+    const chordContent = nodeChordContent ? ctx.text(nodeChordContent) : ""
+
+    const chord = parseChord(chordContent)
+
+    return chord
+}
+
+function toText(node: SyntaxNode, ctx: AstContext): string {
+    if (node.name !== "Text") {
+        throw new Error(`Node was not Text, was ${node.name}`)
+    }
+
+    return ctx.text(node)
 }
 
 function toAttributes(node: SyntaxNode, ctx: AstContext): Array<AstAttribute> {

@@ -1,16 +1,17 @@
 import { cstToAst } from "./src/parser/parser"
 import { printTree } from "./src/parser/utils"
 import { parser } from "@chordpro-ts/lezer"
+import { saveTestSong } from "./src/utils"
 
-export const song = `{title: value="Góðska Guðs"    }
-{subtitle:Goodness of God }
+export const song = `{title: Góðska Guðs}
+{subtitle: Goodness of God }
 {key: A}
 
 {comment: Intro: Kassagittar, so klaver+bass í vers}
 
-{sov Verse 1.}
+{sov label="Verse 1."}
 1. Eg elski [A]teg, tí tín [D/A]náði ei meg [A]svíkur.
-Hvønn ein [F#m]dag hond tín [D]sterka meg [Esus4]ber. [E]
+Hvønn ein [F#m]dag hond tín [D]sterka meg [Esus4]ber. [E][D][H]
 Tá eg opni míni [F#m]eygu, [D] og til eg [A]leggi me-[F#m]g,
 vil eg [D]syngja um [E]góðsku Tína, [A]Gud.
 {eov}
@@ -43,6 +44,8 @@ Tín [A/C#]góðska [D]fylgir mær, hon [E]floymir yvir [A]meg.
 
 const cst = parser.parse(song)
 
-// cstToAst(cst, song)
+const ast = cstToAst(cst, song)
 
-printTree(cst.topNode, song, "")
+saveTestSong(ast)
+
+// printTree(cst.topNode, song, "")
