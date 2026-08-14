@@ -34,7 +34,9 @@ DirectiveName {
     identifier
 }
 
-directiveSeparator { (space* ":" space* | space) }
+directiveSeparator { 
+    directiveColonSeparator | directiveSpaceSeparator 
+}
 
 DirectiveValue {
     directiveValueText
@@ -131,6 +133,19 @@ string {
         startOfEnvironment,
         endOfEnvironment,
         identifier
+    }
+
+    directiveSpaceSeparator {
+        space
+    }
+
+    directiveColonSeparator {
+        space* ":" space*
+    }
+
+    @precedence {
+        directiveColonSeparator,
+        directiveSpaceSeparator
     }
 }
 

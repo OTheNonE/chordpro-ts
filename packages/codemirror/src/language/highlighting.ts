@@ -31,8 +31,8 @@ export const chordproHighlighting = styleTags({
     // Environment
     EnvironmentStart: chordproTags.directive,
     EnvironmentEnd: chordproTags.directive,
-    EnvironmentStartName: chordproTags.directiveName,
-    EnvironmentEndName: chordproTags.directiveName,
+    "EnvironmentStartName!": chordproTags.directiveName,
+    "EnvironmentEndName!": chordproTags.directiveName,
 
     // Chords
     Chord: chordproTags.chordBracket,

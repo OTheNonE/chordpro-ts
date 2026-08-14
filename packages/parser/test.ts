@@ -9,7 +9,7 @@ export const song = `{title: Góðska Guðs}
 
 {comment: Intro: Kassagittar, so klaver+bass í vers}
 
-{sov label="Verse 1."}
+{sov : label="Verse 1."}
 1. Eg elski [A]teg, tí tín [D/A]náði ei meg [A]svíkur.
 Hvønn ein [F#m]dag hond tín [D]sterka meg [Esus4]ber. [E][D][H]
 Tá eg opni míni [F#m]eygu, [D] og til eg [A]leggi me-[F#m]g,
@@ -44,8 +44,8 @@ Tín [A/C#]góðska [D]fylgir mær, hon [E]floymir yvir [A]meg.
 
 const cst = parser.parse(song)
 
-const ast = cstToAst(cst, song)
+// const ast = cstToAst(cst, song)
 
-saveTestSong(ast)
+// saveTestSong(ast)
 
-// printTree(cst.topNode, song, "")
+printTree(cst.topNode, song, "")
